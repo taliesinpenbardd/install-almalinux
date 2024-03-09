@@ -39,34 +39,27 @@ checkIfGroupExists() {
 # User
 #############################################
 
-# Check if the user exists
-read -p "Enter your username: [Default: almalinux]" username
-username=${username:-almalinux}
-
-if checkIfUserExists $username; then
-    echo "User '$username' already exists"
-else
-    # Create the user
+# if user is root, then create a new user (non-root) and add it to the wheel group
+if checkIfRoot; then
+    echo "User is root, creating a new user..."
+    read -p "Enter your username: [Default: almalinux]" username
+    username=${username:-almalinux}
     useradd -m $username
     passwd $username
+    usermod -aG wheel $username
     echo "User '$username' created successfully"
-fi
-
-# the user exists, does the group exist?
-if checkIfGroupExists almalinux; then
-    echo "Group almalinux already exists"
 else
-    # Create the group of the same name as the user
-    groupadd almalinux
-    echo "Group almalinux created successfully"
+    echo "User is not root, skipping user creation"
 fi
 
-# Add the user to the group of the same name
-usermod -aG almalinux $username
-echo "User '$username' added to group almalinux"
-
-# Add the user to the sudoers file
-usermod -aG wheel $username
+# if user is not in the almalinux group, add him to the group
+if ! grep -q "^$username:" /etc/group; then
+    groupadd almalinux
+    usermod -aG almalinux $username
+    echo "User '$username' added to group almalinux"
+else
+    echo "User '$username' already in group almalinux"
+fi
 
 # Login as the user
 su - $username
