@@ -44,24 +44,28 @@ checkIfGroupExists() {
 
 # if user is root, then create a new user (non-root) and add it to the wheel group
 if checkIfRoot; then
-    echo "User is root, creating a new user..."
-    read -p "Enter your username: [Default: almalinux]" username
-    username=${username:-almalinux}
-    useradd -m $username
-    passwd $username
-    usermod -aG wheel $username
+    if checkIfUserExists; then
+        echo " "
+        echo "User $username already exists, skipping user creation."
+        echo " "
+    else
+        echo " "
+        echo "User is root, creating a new user..."
+        echo " "
+        read -p "Enter your username: [Default: almalinux]" username
+        username=${username:-almalinux}
+        useradd -m $username
+        passwd $username
+        usermod -aG wheel $username
 
-    echo <<MESSAGE
-
-User $username created successfully.
-
-MESSAGE
+        echo " "
+        User $username created successfully.
+        echo " "
+    fi
 else
-    echo <<MESSAGE
-
-User is not root, skipping user creation. Please ensure you have root access though.
-
-MESSAGE
+    echo " "
+    echo "User is not root, skipping user creation. Please ensure you have root access though."
+    echo " "
 fi
 
 # if user is not in the almalinux group, add him to the group
