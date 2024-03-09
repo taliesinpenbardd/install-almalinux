@@ -3,11 +3,20 @@
 #############################################
 # Variables
 #############################################
-username="almalinux"
+local username
 
 #############################################
 # Functions
 #############################################
+# Check if user is root
+checkIfRoot() {
+    if [ "$(id -u)" -ne 0 ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
 # Check if the user exists
 checkIfUserExists() {
     if id "$username" &>/dev/null; then
@@ -39,25 +48,24 @@ if checkIfUserExists $username; then
 else
     # Create the user
     useradd -m $username
-    passwd almalinux
+    passwd $username
     echo "User '$username' created successfully"
 fi
 
 # the user exists, does the group exist?
-if checkIfGroupExists $username; then
-    echo "Group '$username' already exists"
+if checkIfGroupExists almalinux; then
+    echo "Group almalinux already exists"
 else
     # Create the group of the same name as the user
-    groupadd $username
-    echo "Group '$username' created successfully"
+    groupadd almalinux
+    echo "Group almalinux created successfully"
 fi
 
 # Add the user to the group of the same name
-usermod -a -G $username $username
-echo "User '$username' added to group $username"
+usermod -aG almalinux $username
+echo "User '$username' added to group almalinux"
 
 # Add the user to the sudoers file
-# echo "$username ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/$username
 usermod -aG wheel $username
 
 # Login as the user
@@ -65,6 +73,10 @@ su - $username
 
 # Echo whoami
 echo "whoami: $(whoami)"
+
+# Disallow root login through SSH
+sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+sudo systemctl restart sshd
 
 #############################################
 # Generic
@@ -85,3 +97,11 @@ sudo dnf install curl -y
 # Install docker
 echo "Installing docker..."
 sudo dnf install docker -y
+
+# Install fail2ban
+echo "Installing fail2ban..."
+sudo dnf install fail2ban -y
+
+# Install caddy server
+echo "Installing caddy server..."
+sudo dnf install caddy -y
