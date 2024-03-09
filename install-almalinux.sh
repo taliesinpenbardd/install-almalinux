@@ -3,7 +3,7 @@
 #############################################
 # Variables
 #############################################
-local username
+username
 
 #############################################
 # Functions
@@ -86,6 +86,10 @@ sudo systemctl restart sshd
 echo "Updating the system..."
 sudo dnf update -y
 
+# Install epel-release
+sudo dnf install epel-release -y
+sudo dnf update -y
+
 # Install Git
 echo "Installing Git..."
 sudo dnf install git -y
@@ -98,10 +102,24 @@ sudo dnf install curl -y
 echo "Installing docker..."
 sudo dnf install docker -y
 
-# Install fail2ban
-echo "Installing fail2ban..."
-sudo dnf install fail2ban -y
-
 # Install caddy server
 echo "Installing caddy server..."
 sudo dnf install caddy -y
+sudo systemctl enable caddy
+sudo systemctl start caddy
+
+# Enable and start firewalld
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+
+# Open ports
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo firewall-cmd --permanent --add-service=ssh
+sudo systemctl reload firewalld
+
+# Install fail2ban
+echo "Installing fail2ban..."
+sudo dnf install fail2ban -y
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
