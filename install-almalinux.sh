@@ -38,34 +38,48 @@ checkIfGroupExists() {
     fi
 }
 
+createNewUser() {
+    read -p "Enter your username: [Default: almalinux]" username
+    username=${username:-almalinux}
+    useradd -m $username
+    passwd $username
+    usermod -aG wheel $username
+
+    # Login as the user
+    su - $username
+
+    echo " "
+    User $username created successfully.
+    echo " "
+}
+
 #############################################
 # User
 #############################################
 
 # if user is root, then create a new user (non-root) and add it to the wheel group
 if checkIfRoot; then
+        echo " "
+        echo "User is root, creating a new user..."
+        echo " "
+
+        createNewUser $username
+    fi
+else
     if checkIfUserExists; then
         echo " "
         echo "User $username already exists, skipping user creation."
         echo " "
     else
         echo " "
-        echo "User is root, creating a new user..."
+        echo "User is not root, skipping user creation. Please ensure you have root access though."
         echo " "
-        read -p "Enter your username: [Default: almalinux]" username
-        username=${username:-almalinux}
-        useradd -m $username
-        passwd $username
-        usermod -aG wheel $username
 
-        echo " "
-        User $username created successfully.
-        echo " "
+        read -p "Would you create another user? [y/n] " -n 1 -r response
+        if [[ $response =~ ^[Yy]$ ]]; then
+            createNewUser $username
+        fi
     fi
-else
-    echo " "
-    echo "User is not root, skipping user creation. Please ensure you have root access though."
-    echo " "
 fi
 
 # if user is not in the almalinux group, add him to the group
@@ -73,36 +87,25 @@ if ! grep -q "^$username:" /etc/group; then
     groupadd almalinux
     usermod -aG almalinux $username
 
-    echo <<MESSAGE
-
-User $username added to group almalinux
-
-MESSAGE
+    echo " "
+    echo "User $username added to group almalinux"
+    echo " "
 else
-    echo <<MESSAGE
-
-User $username already in group almalinux
-
-MESSAGE
-
+    echo " "
+    echo "User $username already in group almalinux"
+    echo " "
 fi
 
-# Login as the user
-su - $username
-
 # Echo whoami
-echo <<MESSAGE
-
-whoami: $(whoami)
-
-MESSAGE
+echo " "
+echo "whoami: $(whoami)"
+echo " "
 
 # Disallow root login through SSH
-echo <<<MESSAGE
+echo " "
+echo "Disabling root login through SSH..."
+echo " "
 
-Disabling root login through SSH...
-
-MESSAGE
 sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 echo "Done."
