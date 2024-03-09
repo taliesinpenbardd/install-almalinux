@@ -11,18 +11,18 @@ username="almalinux"
 # Check if the user exists
 checkIfUserExists() {
     if id "$username" &>/dev/null; then
-        return true
+        return 1
     else
-        return false
+        return 0
     fi
 }
 
 # Check if the group of the same name exists
 checkIfGroupExists() {
     if grep -q "^$username:" /etc/group; then
-        return true
+        return 1
     else
-        return false
+        return 0
     fi
 }
 
@@ -59,6 +59,9 @@ echo "User '$username' added to group $username"
 # Add the user to the sudoers file
 # echo "$username ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/$username
 usermod -aG wheel $username
+
+# Login as the user
+su - $username
 
 # Echo whoami
 echo "whoami: $(whoami)"
