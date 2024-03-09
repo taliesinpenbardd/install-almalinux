@@ -64,7 +64,6 @@ if checkIfRoot; then
         echo " "
 
         createNewUser $username
-    fi
 else
     if checkIfUserExists; then
         echo " "
