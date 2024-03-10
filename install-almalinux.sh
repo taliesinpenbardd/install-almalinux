@@ -160,7 +160,7 @@ echo "Done."
 echo " "
 echo "Installing micro editor..."
 echo " "
-curl https://getmic.ro | bash
+sudo curl https://getmic.ro | bash
 sudo mv micro /usr/bin
 echo "Done."
 
