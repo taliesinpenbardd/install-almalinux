@@ -41,7 +41,7 @@ checkIfGroupExists() {
 }
 
 createNewUser() {
-    read -p "Enter your username: [Default: almalinux]" username
+    read -r -p "Enter your username: [Default: almalinux]" username
     username=${username:-almalinux}
     useradd -m $username
     passwd $username
@@ -58,7 +58,7 @@ createNewUser() {
 #############################################
 # User
 #############################################
-
+https://gist.github.com/b26c3907fb1e9b3395f62e85ba52d0e6.git
 # if user is root, then create a new user (non-root) and add it to the wheel group
 if checkIfRoot; then
         echo " "
