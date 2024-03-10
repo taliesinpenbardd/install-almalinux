@@ -128,6 +128,13 @@ echo " "
 sudo dnf update -y
 echo "Done."
 
+# Install tar
+echo " "
+echo "Installing tar..."
+echo " "
+sudo dnf install tar -y
+echo "Done."
+
 # Install epel-release
 echo " "
 sudo dnf install epel-release -y
