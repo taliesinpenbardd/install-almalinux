@@ -49,7 +49,7 @@ createNewUser() {
 
     # Move the script to the user's home directory
     cp -r /root/install-almalinux /home/$username
-    chmod 755 /home/$username/install-almalinux
+    chmod -R 755 /home/$username/install-almalinux
 
     # Make it executable
     chmod +x /home/$username/install-almalinux/install-almalinux.sh
