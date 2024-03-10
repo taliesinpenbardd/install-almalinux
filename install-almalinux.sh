@@ -47,6 +47,9 @@ createNewUser() {
     passwd $username
     usermod -aG wheel $username
 
+    # TODO: move the script to the user's home directory
+    cp ./install-almalinux.sh /home/$username
+
     # Login as the user
     su - $username
 
