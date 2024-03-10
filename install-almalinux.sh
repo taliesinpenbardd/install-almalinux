@@ -51,7 +51,7 @@ createNewUser() {
     cp -r /root/install-almalinux /home/$username
 
     # Make it executable
-    chmod +x /home/$username/install-almalinux.sh
+    chmod +x /home/$username/install-almalinux/install-almalinux.sh
 
     # Login as the user
     su - $username
