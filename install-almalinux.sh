@@ -171,11 +171,32 @@ echo " "
 sudo dnf install docker -y
 echo "Done."
 
+# Install PHP-FPM
+echo " "
+echo "Installing PHP-FPM..."
+echo " "
+sudo dnf install -y http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+sudo dnf makecache -y
+sudo dnf module reset php -y
+sudo dnf module install -y php:remi-8.3
+sudo dnf install -y php
+sudo dnf install -y php-{common,pear,cgi,curl,gettext,bcmath,json,intl,imap,fpm,cli,gd,mbstring,mysqlnd,xml,zip}
+sudo sed -i 's/;listen.owner = nobody/listen.owner = caddy/g' /etc/php-fpm.d/www.conf
+sudo sed -i 's/;listen.group = nobody/listen.group = caddy/g' /etc/php-fpm.d/www.conf
+sudo sed -i 's/;listen.mode = 0660/listen.mode = 0660/g' /etc/php-fpm.d/www.conf
+sudo systemctl enable php-fpm
+sudo systemctl start php-fpm
+echo "Done."
+
 # Install caddy server
 echo " "
 echo "Installing caddy server..."
 echo " "
 sudo dnf install caddy -y
+sudo mkdir -p /var/www/html
+sudo mkdir -p /var/www/logs
+sudo touch /var/www/logs/access.caddy.log
+sudo cp localhost.caddyfile /etc/caddy/Caddyfile.d
 sudo systemctl enable caddy
 sudo systemctl start caddy
 echo "Done."
@@ -205,21 +226,4 @@ echo " "
 sudo dnf install fail2ban -y
 sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
-echo "Done."
-
-# Install PHP-FPM
-echo " "
-echo "Installing PHP-FPM..."
-echo " "
-sudo dnf install -y http://rpms.remirepo.net/enterprise/remi-release-9.rpm
-sudo dnf makecache -y
-sudo dnf module reset php -y
-sudo dnf module install -y php:remi-8.3
-sudo dnf install -y php
-sudo dnf install -y php-{common,pear,cgi,curl,gettext,bcmath,json,intl,imap,fpm,cli,gd,mbstring,mysqlnd,xml,zip}
-sudo sed -i 's/;listen.owner = nobody/listen.owner = caddy/g' /etc/php-fpm.d/www.conf
-sudo sed -i 's/;listen.group = nobody/listen.group = caddy/g' /etc/php-fpm.d/www.conf
-sudo sed -i 's/;listen.mode = 0660/listen.mode = 0660/g' /etc/php-fpm.d/www.conf
-sudo systemctl enable php-fpm
-sudo systemctl start php-fpm
 echo "Done."

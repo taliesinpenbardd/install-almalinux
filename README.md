@@ -26,7 +26,7 @@ bash ./install-almalinux.sh
 
 You'll be asked for your password a few times, but the rest is automatic.
 
-## Note
+## New user
 
 If you need to create a new user (because you are root by default), the process will copy the installation file to your new user's home directory and log you as the new user. Then relaunch the process (`bash ./install-almalinux.sh`), answer `n` when asked if you want to create a new user and go on.
 
@@ -48,3 +48,8 @@ This script will:
   - PHP-FPM with PHP 8.3
 - Adapt the firewall to open ports for Caddy
 - Adapt the PHP-FPM config file to allow Caddy to use it, in case of need of the `reverse_proxy` directive
+- Create a localhost.caddyfile in `/etc/caddy/Caddyfile.d` that you will be able to edit and customize. Usually, in this file, you'll want to replace `localhost` with your domain name (e.g. `example.com`). As per Caddy rules, no need to precise the scheme, the HTTPS connexion is automatically generated.
+
+### Note
+
+This script is tailored for me. Use at your own risks.
