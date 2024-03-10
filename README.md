@@ -25,3 +25,7 @@ bash ./install-almalinux.sh
 ```
 
 You'll be asked for your password a few times, but the rest is automatic.
+
+## Note
+
+If you need to create a new user (because you are root by default), the process will copy the installation file to your new user's home directory and log you as the new user. Then relaunch the process (`bash ./install-almalinux.sh`), answer `n` when asked if you want to create a new user and go on.
