@@ -206,3 +206,15 @@ sudo dnf install fail2ban -y
 sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
 echo "Done."
+
+# Install PHP-FPM
+echo " "
+echo "Installing PHP-FPM..."
+echo " "
+sudo dnf install -y http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+sudo dnf makecache -y
+sudo dnf module reset php -y
+sudo dnf module install -y php:remi-8.3
+sudo dnf install -y php
+sudo dnf install -y php-{common,pear,cgi,curl,gettext,bcmath,json,intl,imap,fpm,cli,gd,mbstring,mysqlnd,xml,zip}
+echo "Done."
