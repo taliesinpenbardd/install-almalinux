@@ -19,9 +19,9 @@ localectl set-keymap fr-mac
 Then, all you have to do is :
 
 ```
-curl -o install.sh https://raw.githubusercontent.com/taliesinpenbardd/install-almalinux/main/install-almalinux.sh
-chmod +x install.sh
-bash ./install.sh
+curl -O https://raw.githubusercontent.com/taliesinpenbardd/install-almalinux/main/install-almalinux.sh
+chmod +x install-almalinux.sh
+bash ./install-almalinux.sh
 ```
 
 You'll be asked for your password a few times, but the rest is automatic.
