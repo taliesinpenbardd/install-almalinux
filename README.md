@@ -45,4 +45,6 @@ This script will:
   - docker
   - caddy server
   - fail2ban
+  - PHP-FPM with PHP 8.3
 - Adapt the firewall to open ports for Caddy
+- Adapt the PHP-FPM config file to allow Caddy to use it, in case of need of the `reverse_proxy` directive
