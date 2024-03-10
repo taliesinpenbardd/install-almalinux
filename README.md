@@ -2,10 +2,10 @@
 
 ## First steps
 
-You might wanna install `curl` to download the installer:
+You might wanna install `git` to clone the script:
 
 ```
-dnf install -y curl
+dnf install -y git
 ```
 
 If needed, you can set your keyboard to the right configuration:
@@ -19,7 +19,8 @@ localectl set-keymap fr-mac
 Then, all you have to do is :
 
 ```
-curl -O https://raw.githubusercontent.com/taliesinpenbardd/install-almalinux/main/install-almalinux.sh
+git clone https://github.com/taliesinpenbardd/install-almalinux.git
+cd install-almalinux
 chmod +x install-almalinux.sh
 bash ./install-almalinux.sh
 ```
