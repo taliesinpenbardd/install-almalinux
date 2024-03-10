@@ -46,4 +46,3 @@ This script will:
   - caddy server
   - fail2ban
 - Adapt the firewall to open ports for Caddy
--
