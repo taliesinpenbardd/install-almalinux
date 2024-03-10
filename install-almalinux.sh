@@ -48,7 +48,7 @@ createNewUser() {
     usermod -aG wheel $username
 
     # Move the script to the user's home directory
-    cp -r ./install-almalinux /home/$username
+    cp -r /root/install-almalinux /home/$username
 
     # Make it executable
     chmod +x /home/$username/install-almalinux.sh
