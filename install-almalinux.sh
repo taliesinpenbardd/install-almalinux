@@ -54,12 +54,12 @@ createNewUser() {
     # Make it executable
     chmod +x /home/$username/install-almalinux/install-almalinux.sh
 
-    # Login as the user
-    su - $username
-
     echo " "
     echo "User $username created successfully."
     echo " "
+
+    # Login as the user
+    su - $username
 }
 
 #############################################
