@@ -138,8 +138,9 @@ echo "Done."
 
 # Install epel-release
 echo " "
-sudo dnf install epel-release -y
+echo "Installing epel-release..."
 echo " "
+sudo dnf install epel-release -y
 sudo dnf update -y
 echo "Done."
 
