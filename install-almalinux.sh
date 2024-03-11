@@ -58,7 +58,7 @@ createNewUser() {
     su - $username
 
     echo " "
-    User $username created successfully.
+    echo "User $username created successfully."
     echo " "
 }
 
