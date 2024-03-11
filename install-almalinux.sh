@@ -217,6 +217,8 @@ echo " "
 sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --permanent --add-service=https
 sudo firewall-cmd --permanent --add-service=ssh
+# Uncomment the next line if you need your mysql server accessible from outside
+# sudo firewall-cmd --permanent --add-service=mysql
 sudo systemctl restart firewalld
 echo "Done."
 
@@ -227,4 +229,21 @@ echo " "
 sudo dnf install fail2ban -y
 sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
+echo "Done."
+
+# Install MariaDB
+echo " "
+echo "Installing MariaDB..."
+echo " "
+sudo dnf install mariadb-server -y
+sudo cat > /etc/my.cnf.d/charset.cnf << EOF
+[mysqld]
+character-set-server = utf8mb4
+
+[client]
+default-character-set = utf8mb4
+EOF
+sudo systemctl enable mariadb
+sudo systemctl start mariadb
+mysql-secure-installation
 echo "Done."
