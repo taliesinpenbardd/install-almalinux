@@ -236,14 +236,7 @@ echo " "
 echo "Installing MariaDB..."
 echo " "
 sudo dnf install mariadb-server -y
-sudo cat > /etc/my.cnf.d/charset.cnf << EOF
-[mysqld]
-character-set-server = utf8mb4
-
-[client]
-default-character-set = utf8mb4
-EOF
 sudo systemctl enable mariadb
 sudo systemctl start mariadb
-mysql-secure-installation
+sudo mysql_secure_installation
 echo "Done."

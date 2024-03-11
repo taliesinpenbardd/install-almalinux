@@ -47,9 +47,11 @@ This script will:
   - caddy server
   - fail2ban
   - PHP-FPM with PHP 8.3
+  - MariaDB
 - Adapt the firewall to open ports for Caddy
 - Adapt the PHP-FPM config file to allow Caddy to use it, in case of need of the `reverse_proxy` directive
 - Create a localhost.caddyfile in `/etc/caddy/Caddyfile.d` that you will be able to edit and customize. Usually, in this file, you'll want to replace `localhost` with your domain name (e.g. `example.com`). As per Caddy rules, no need to precise the scheme, the HTTPS connexion is automatically generated.
+- At the very end of the script, you are left with MariaDB's `mysql_secure_installation` where you'll need to change the password for the root MySQL user.
 
 ### Note
 
