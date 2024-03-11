@@ -1,9 +1,10 @@
 localhost {
     root * /var/www/html
+    encode zstd gzip
     file_server
     log {
         format json
-        output /var/www/logs/access.caddy.log
+        output file /var/www/logs/access.caddy.log
     }
     php_fastcgi unix//run/php-fpm/www.sock
     # reverse_proxy localhost:8000
