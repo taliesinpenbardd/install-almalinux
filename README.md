@@ -4,13 +4,13 @@
 
 You might wanna install `git` to clone the script:
 
-```
+```bash
 dnf install -y git
 ```
 
 If needed, you can set your keyboard to the right configuration:
 
-```
+```bash
 localectl set-keymap fr-mac
 ```
 
@@ -18,7 +18,7 @@ localectl set-keymap fr-mac
 
 Then, all you have to do is :
 
-```
+```bash
 git clone https://github.com/taliesinpenbardd/install-almalinux.git
 cd install-almalinux
 chmod +x install-almalinux.sh
@@ -44,14 +44,45 @@ This script will:
   - curl
   - micro editor
   - docker
+  - NodeJS 18
   - caddy server
   - fail2ban
   - PHP-FPM with PHP 8.3
+  - Composer
   - MariaDB
 - Adapt the firewall to open ports for Caddy
 - Adapt the PHP-FPM config file to allow Caddy to use it, in case of need of the `reverse_proxy` directive
 - Create a localhost.caddyfile in `/etc/caddy/Caddyfile.d` that you will be able to edit and customize. Usually, in this file, you'll want to replace `localhost` with your domain name (e.g. `example.com`). As per Caddy rules, no need to precise the scheme, the HTTPS connexion is automatically generated.
 - At the very end of the script, you are left with MariaDB's `mysql_secure_installation` where you'll need to change the password for the root MySQL user.
+
+### MariaDB Config
+
+Once the `mysql_secure_installation` process is done (do not forget to change the root password), you are left with the task of creating the tables. Typically, that looks like that:
+
+```bash
+sudo systemctl enable mariadb
+sudo systemctl start mariadb
+
+sudo mysql
+create database your_database_name;
+create user your_user_name@localhost identified by 'your_user_password';
+grant all on your_database_name.* to your_user_name@localhost;
+flush privileges;
+exit;
+```
+
+### Domain config
+
+You'll have to redirect your domain's A records to the IPv4 address of the server, and the domain's AAAA records to its IPv6 address, for each subdomain.
+
+### SELinux
+
+Although a good defense, SELinux is a pain. If you have write errors on your files (most probably on /bootstrap/cache/\* and /storage/logs/\* for Laravel), begin by temporarily deactivate SELinux with `setenforce 0`. If the website runs normally, that was the problem. In that case, get security back with `setenforce 1`. Then use `semanage` to change the context authorizations (always check the paths):
+
+```bash
+sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/storage(/.*)?"
+sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/bootstrap/cache(/.*)?"
+```
 
 ### Note
 

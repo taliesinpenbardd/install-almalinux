@@ -173,6 +173,13 @@ echo " "
 sudo dnf install docker -y
 echo "Done."
 
+# Install NodeJS
+echo " "
+echo "Installing NodeJS 18"
+echo " "
+sudo dnf module install nodejs:18
+echo "Done."
+
 # Install PHP-FPM
 echo " "
 echo "Installing PHP-FPM..."
@@ -186,8 +193,16 @@ sudo dnf install -y php-{common,pear,cgi,curl,gettext,bcmath,json,intl,imap,fpm,
 sudo sed -i 's/;listen.owner = nobody/listen.owner = caddy/g' /etc/php-fpm.d/www.conf
 sudo sed -i 's/;listen.group = nobody/listen.group = caddy/g' /etc/php-fpm.d/www.conf
 sudo sed -i 's/;listen.mode = 0660/listen.mode = 0660/g' /etc/php-fpm.d/www.conf
+sudo sed -i 's/listen.acl_users = apache,nginx/;listen.acl_users = apache,nginx/g' /etc/php-fpm.d/www.conf
 sudo systemctl enable php-fpm
 sudo systemctl start php-fpm
+echo "Done."
+
+# Install Composer
+echo " "
+echo "Installing Composer..."
+echo " "
+sudo dnf install composer -y
 echo "Done."
 
 # Install caddy server
@@ -195,11 +210,11 @@ echo " "
 echo "Installing caddy server..."
 echo " "
 sudo dnf install caddy -y
-sudo mkdir -p /var/www/html
-sudo mkdir -p /var/www/logs
-sudo touch /var/www/logs/access.caddy.log
-sudo cp localhost.caddyfile /etc/caddy/Caddyfile.d
 sudo systemctl enable caddy
+sudo mkdir -p /var/www/production/html
+sudo mkdir -p /var/www/production/logs
+sudo touch /var/www/production/logs/access.caddy.log
+sudo cp localhost.caddyfile /etc/caddy/Caddyfile.d
 sudo systemctl start caddy
 echo "Done."
 
@@ -230,6 +245,22 @@ echo " "
 sudo dnf install fail2ban -y
 sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
+echo "Done."
+
+# Permissions
+echo " "
+echo "Setting permissions..."
+echo " "
+sudo usermod -aG wheel caddy
+sudo usermod -aG caddy almalinux
+sudo usermod -aG almalinux caddy
+sudo find /var/www -type f -exec chmod 644 {} \;
+sudo find /var/www -type d -exec chmod 755 {} \;
+sudo chown -R almalinux:caddy /var/www
+# @see https://stackoverflow.com/a/52121913
+sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/storage(/.*)?"
+sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/bootstrap/cache(/.*)?"
+sudo restorecon -Rv /var/www/production/html
 echo "Done."
 
 # Install MariaDB
