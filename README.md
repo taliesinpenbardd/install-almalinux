@@ -82,6 +82,8 @@ Although a good defense, SELinux is a pain. If you have write errors on your fil
 ```bash
 sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/storage(/.*)?"
 sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/bootstrap/cache(/.*)?"
+
+sudo restorecon -Rv /var/www/production/html
 ```
 
 ### Note
