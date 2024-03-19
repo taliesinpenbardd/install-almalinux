@@ -11,4 +11,27 @@ localhost {
         path */.*
         not path /.well-known/*
     }
+    header {
+        # Enable HTTP Strict Transport Security (HSTS) to force clients to always connect via HTTPS (do not use if only testing)
+        Strict-Transport-Security max-age=31536000; includeSubDomains; preload
+
+        # Prevent clickjacking
+        X-Frame-Options DENY
+
+        # Enable cross-site filter (XSS) and tell browser to block detected attacks
+        X-XSS-Protection "1; mode=block"
+
+        # Prevent some browsers from MIME-sniffing a response away from the declared Content-Type
+        X-Content-Type-Options "nosniff"
+
+        # Hide server header field
+        -Server
+
+        # The cache should not store anything about the client request or server response
+        Cache-Control "no-store"
+        Pragma "no-cache"
+
+        # Block XSS attacks and data injection
+        Content-Security-Policy "default-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; img-src 'self'; form-action 'self'; connect-src 'self'; frame-ancestors 'none';"
+    }
 }
