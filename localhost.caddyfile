@@ -7,5 +7,8 @@ localhost {
         output file /var/www/logs/access.caddy.log
     }
     php_fastcgi unix//run/php-fpm/www.sock
-    # reverse_proxy localhost:8000
+    @dotFiles {
+        path */.*
+        not path /.well-known/*
+    }
 }
