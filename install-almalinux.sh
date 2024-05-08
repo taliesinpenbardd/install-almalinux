@@ -189,7 +189,7 @@ sudo dnf makecache -y
 sudo dnf module reset php -y
 sudo dnf module install -y php:remi-8.3
 sudo dnf install -y php
-sudo dnf install -y php-{common,pear,cgi,curl,gettext,bcmath,json,intl,imap,fpm,cli,gd,mbstring,mysqlnd,xml,zip}
+sudo dnf install -y php-{common,pear,cgi,curl,gettext,bcmath,json,intl,imap,fpm,cli,gd,mbstring,mysqlnd,xml,zip,opcache,pdo}
 sudo sed -i 's/;listen.owner = nobody/listen.owner = caddy/g' /etc/php-fpm.d/www.conf
 sudo sed -i 's/;listen.group = nobody/listen.group = caddy/g' /etc/php-fpm.d/www.conf
 sudo sed -i 's/;listen.mode = 0660/listen.mode = 0660/g' /etc/php-fpm.d/www.conf
