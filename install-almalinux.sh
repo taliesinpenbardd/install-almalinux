@@ -193,9 +193,9 @@ sudo dnf install -y php-{common,pear,cgi,curl,gettext,bcmath,json,intl,imap,fpm,
 sudo sed -i 's/;listen.owner = nobody/listen.owner = caddy/g' /etc/php-fpm.d/www.conf
 sudo sed -i 's/;listen.group = nobody/listen.group = caddy/g' /etc/php-fpm.d/www.conf
 sudo sed -i 's/;listen.mode = 0660/listen.mode = 0660/g' /etc/php-fpm.d/www.conf
-sudo sed -i 's/listen.acl_users = apache,nginx/;listen.acl_users = apache,nginx/g' /etc/php-fpm.d/www.conf
+sudo sed -i 's/listen.acl_users = apache,nginx/listen.acl_users = apache,nginx,caddy/g' /etc/php-fpm.d/www.conf
 sudo systemctl enable php-fpm
-sudo systemctl start php-fpm
+# sudo systemctl start php-fpm
 echo "Done."
 
 # Install Composer
@@ -216,6 +216,7 @@ sudo mkdir -p /var/www/production/logs
 sudo touch /var/www/production/logs/access.caddy.log
 sudo cp localhost.caddyfile /etc/caddy/Caddyfile.d
 sudo systemctl start caddy
+sudo systemctl start php-fpm
 echo "Done."
 
 # Enable and start firewalld
