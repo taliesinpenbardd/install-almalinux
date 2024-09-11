@@ -223,6 +223,7 @@ echo "Done."
 echo " "
 echo "Enabling and starting firewalld..."
 echo " "
+sudo dnf install firewalld -y
 sudo systemctl enable firewalld
 sudo systemctl start firewalld
 echo "Done."
