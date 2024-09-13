@@ -4,7 +4,7 @@ localhost {
     file_server
     log {
         format json
-        output file /var/www/logs/access.caddy.log
+        output file /var/www/production/logs/access.caddy.log
     }
     php_fastcgi unix//run/php-fpm/www.sock
     @dotFiles {
