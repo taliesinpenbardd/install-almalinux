@@ -160,15 +160,15 @@ sudo dnf install curl -y
 
 echo "Done."
 
-# Install micro editor
-echo "************************************************************"
-echo "Installing micro editor..."
-echo "************************************************************"
+# # Install micro editor
+# echo "************************************************************"
+# echo "Installing micro editor..."
+# echo "************************************************************"
 
-sudo curl https://getmic.ro | bash
-sudo mv micro /usr/bin
+# sudo curl https://getmic.ro | bash
+# sudo mv micro /usr/bin
 
-echo "Done."
+# echo "Done."
 
 # Install docker
 echo "************************************************************"
