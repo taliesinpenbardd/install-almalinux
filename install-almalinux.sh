@@ -177,7 +177,7 @@ echo "Done."
 echo " "
 echo "Installing NodeJS 18"
 echo " "
-sudo dnf module install nodejs:18
+sudo dnf module install nodejs:18 -y
 echo "Done."
 
 # Install PHP-FPM
