@@ -2,30 +2,27 @@
 
 ## First steps
 
-You might wanna install `git` to clone the script:
-
 ```bash
-dnf install -y git
-```
-
-If needed, you can set your keyboard to the right configuration:
-
-```bash
-localectl set-keymap fr-mac
-```
-
-(Use `fr-oss` on Windows)
-
-Then, all you have to do is :
-
-```bash
-git clone https://github.com/taliesinpenbardd/install-almalinux.git
-cd install-almalinux
-chmod +x install-almalinux.sh
+sudo dnf update -y && sudo dnf upgrade -y && \
+sudo localectl set-keymap fr-mac && \
+sudo dnf install -y git && \
+sudo git clone https://github.com/taliesinpenbardd/install-almalinux.git && \
+cd install-almalinux && \
+chmod +x install-almalinux.sh && \
 bash ./install-almalinux.sh
 ```
 
-You'll be asked for your password a few times, but the rest is automatic.
+Line by line, it:
+
+- updates and upgrades the system
+- sets the keyboard layout to French/Mac (use `fr-oss` on Windows)
+- installs git
+- clones this repository
+- goes in the repository
+- makes the installation script executable
+- launches the installation script
+
+You will be asked for your password, and then the installation will be automatic.
 
 ## New user
 
