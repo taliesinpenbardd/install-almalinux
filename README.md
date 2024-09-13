@@ -41,7 +41,7 @@ This script will:
   - curl
   - micro editor
   - docker
-  - NodeJS 18
+  - NodeJS 20
   - caddy server
   - fail2ban
   - PHP-FPM with PHP 8.3
