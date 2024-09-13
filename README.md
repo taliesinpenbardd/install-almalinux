@@ -9,7 +9,7 @@ sudo dnf install -y git && \
 sudo git clone https://github.com/taliesinpenbardd/install-almalinux.git && \
 cd install-almalinux && \
 sudo chmod +x install-almalinux.sh && \
-sudo bash ./install-almalinux.sh
+bash ./install-almalinux.sh
 ```
 
 Line by line, it:
