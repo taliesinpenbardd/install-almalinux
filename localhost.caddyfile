@@ -1,5 +1,5 @@
 localhost {
-    root * /var/www/html
+    root * /var/www/production/html/public
     encode zstd gzip
     file_server
     log {
