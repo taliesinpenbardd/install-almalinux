@@ -18,7 +18,7 @@ Line by line, it:
 - sets the keyboard layout to French/Mac (use `fr-oss` on Windows)
 - installs git
 - clones this repository
-- goes in the repository
+- goes in the directory
 - makes the installation script executable
 - launches the installation script
 
