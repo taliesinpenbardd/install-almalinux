@@ -80,9 +80,8 @@ You'll have to redirect your domain's A records to the IPv4 address of the serve
 Although a good defense, SELinux is a pain. If you have write errors on your files (most probably on /bootstrap/cache/\* and /storage/logs/\* for Laravel), begin by temporarily deactivate SELinux with `setenforce 0`. If the website runs normally, that was the problem. In that case, get security back with `setenforce 1`. Then use `semanage` to change the context authorizations (always check the paths):
 
 ```bash
-sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/storage(/.*)?"
-sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/bootstrap/cache(/.*)?"
-
+sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/storage(/.*)?" && \
+sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/bootstrap/cache(/.*)?" && \
 sudo restorecon -Rv /var/www/production/html
 ```
 
