@@ -151,15 +151,6 @@ sudo dnf update -y
 
 echo "Done."
 
-# Install Git
-echo "************************************************************"
-echo "Installing Git..."
-echo "************************************************************"
-
-sudo dnf install git -y
-
-echo "Done."
-
 # Install curl
 echo "************************************************************"
 echo "Installing curl..."
