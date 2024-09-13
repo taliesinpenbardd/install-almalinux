@@ -54,9 +54,9 @@ createNewUser() {
     # Make it executable
     chmod +x /home/$username/install-almalinux/install-almalinux.sh
 
-    echo " "
+    echo "************************************************************"
     echo "User $username created successfully."
-    echo " "
+    echo "************************************************************"
 
     # Login as the user
     su - $username
@@ -68,20 +68,20 @@ createNewUser() {
 
 # if user is root, then create a new user (non-root) and add it to the wheel group
 if checkIfRoot; then
-        echo " "
+        echo "************************************************************"
         echo "User is root, creating a new user..."
-        echo " "
+        echo "************************************************************"
 
         createNewUser $username
 else
     if checkIfUserExists; then
-        echo " "
+        echo "************************************************************"
         echo "User $username already exists, skipping user creation."
-        echo " "
+        echo "************************************************************"
     else
-        echo " "
+        echo "************************************************************"
         echo "User is not root, skipping user creation. Please ensure you have root access though."
-        echo " "
+        echo "************************************************************"
 
         read -p "Would you create another user? [y/n] " -n 1 -r response
         if [[ $response =~ ^[Yy]$ ]]; then
@@ -95,24 +95,24 @@ if ! grep -q "^$username:" /etc/group; then
     groupadd almalinux
     usermod -aG almalinux $username
 
-    echo " "
+    echo "************************************************************"
     echo "User $username added to group almalinux"
-    echo " "
+    echo "************************************************************"
 else
-    echo " "
+    echo "************************************************************"
     echo "User $username already in group almalinux"
-    echo " "
+    echo "************************************************************"
 fi
 
 # Echo whoami
-echo " "
+echo "************************************************************"
 echo "whoami: $(whoami)"
-echo " "
+echo "************************************************************"
 
 # Disallow root login through SSH
-echo " "
+echo "************************************************************"
 echo "Disabling root login through SSH..."
-echo " "
+echo "************************************************************"
 
 sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
 sudo systemctl restart sshd
@@ -123,67 +123,67 @@ echo "Done."
 #############################################
 
 # Update the system
-echo " "
+echo "************************************************************"
 echo "Updating the system..."
-echo " "
+echo "************************************************************"
 sudo dnf update -y
 echo "Done."
 
 # Install tar
-echo " "
+echo "************************************************************"
 echo "Installing tar..."
-echo " "
+echo "************************************************************"
 sudo dnf install tar -y
 echo "Done."
 
 # Install epel-release
-echo " "
+echo "************************************************************"
 echo "Installing epel-release..."
-echo " "
+echo "************************************************************"
 sudo dnf install epel-release -y
 sudo dnf update -y
 echo "Done."
 
 # Install Git
-echo " "
+echo "************************************************************"
 echo "Installing Git..."
-echo " "
+echo "************************************************************"
 sudo dnf install git -y
 echo "Done."
 
 # Install curl
-echo " "
+echo "************************************************************"
 echo "Installing curl..."
-echo " "
+echo "************************************************************"
 sudo dnf install curl -y
 echo "Done."
 
 # Install micro editor
-echo " "
+echo "************************************************************"
 echo "Installing micro editor..."
-echo " "
+echo "************************************************************"
 sudo curl https://getmic.ro | bash
 sudo mv micro /usr/bin
 echo "Done."
 
 # Install docker
-echo " "
+echo "************************************************************"
 echo "Installing docker..."
-echo " "
+echo "************************************************************"
 sudo dnf install docker -y
 echo "Done."
 
 # Install NodeJS
-echo " "
+echo "************************************************************"
 echo "Installing NodeJS 18"
-echo " "
+echo "************************************************************"
 sudo dnf module install nodejs:18 -y
 echo "Done."
 
 # Install PHP-FPM
-echo " "
+echo "************************************************************"
 echo "Installing PHP-FPM..."
-echo " "
+echo "************************************************************"
 sudo dnf install -y http://rpms.remirepo.net/enterprise/remi-release-9.rpm
 sudo dnf makecache -y
 sudo dnf module reset php -y
@@ -199,16 +199,16 @@ sudo systemctl enable php-fpm
 echo "Done."
 
 # Install Composer
-echo " "
+echo "************************************************************"
 echo "Installing Composer..."
-echo " "
+echo "************************************************************"
 sudo dnf install composer -y
 echo "Done."
 
 # Install caddy server
-echo " "
+echo "************************************************************"
 echo "Installing caddy server..."
-echo " "
+echo "************************************************************"
 sudo dnf install caddy -y
 sudo systemctl enable caddy
 sudo mkdir -p /var/www/production/html
@@ -220,18 +220,18 @@ sudo systemctl start php-fpm
 echo "Done."
 
 # Enable and start firewalld
-echo " "
+echo "************************************************************"
 echo "Enabling and starting firewalld..."
-echo " "
+echo "************************************************************"
 sudo dnf install firewalld -y
 sudo systemctl enable firewalld
 sudo systemctl start firewalld
 echo "Done."
 
 # Open ports
-echo " "
+echo "************************************************************"
 echo "Opening ports..."
-echo " "
+echo "************************************************************"
 sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --permanent --add-service=https
 sudo firewall-cmd --permanent --add-service=ssh
@@ -241,18 +241,18 @@ sudo systemctl restart firewalld
 echo "Done."
 
 # Install fail2ban
-echo " "
+echo "************************************************************"
 echo "Installing fail2ban..."
-echo " "
+echo "************************************************************"
 sudo dnf install fail2ban -y
 sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
 echo "Done."
 
 # Permissions
-echo " "
+echo "************************************************************"
 echo "Setting permissions..."
-echo " "
+echo "************************************************************"
 sudo usermod -aG wheel caddy
 sudo usermod -aG caddy almalinux
 sudo usermod -aG almalinux caddy
@@ -266,9 +266,9 @@ sudo restorecon -Rv /var/www/production/html
 echo "Done."
 
 # Install MariaDB
-echo " "
+echo "************************************************************"
 echo "Installing MariaDB..."
-echo " "
+echo "************************************************************"
 sudo dnf install mariadb-server -y
 sudo systemctl enable mariadb
 sudo systemctl start mariadb
