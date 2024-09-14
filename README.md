@@ -3,26 +3,10 @@
 ## First steps
 
 ```bash
-sudo dnf update -y && sudo dnf upgrade -y && \
-sudo localectl set-keymap fr-mac && \
-sudo dnf install -y git && \
-sudo git clone https://github.com/taliesinpenbardd/install-almalinux.git && \
-cd install-almalinux && \
-sudo chmod +x install-almalinux.sh && \
-bash ./install-almalinux.sh
+curl -sSL https://raw.githubusercontent.com/taliesinpenbardd/install-almalinux/main/install-almalinux.sh | bash
 ```
 
-Line by line, it:
-
-- updates and upgrades the system
-- sets the keyboard layout to French/Mac (use `fr-oss` on Windows)
-- installs git
-- clones this repository
-- goes in the directory
-- makes the installation script executable
-- launches the installation script
-
-You will be asked for your password, and then the installation will be automatic.
+It downloads the installation script and runs it. Nothing is required from you.
 
 ## New user
 
@@ -74,7 +58,7 @@ You'll have to redirect your domain's A records to the IPv4 address of the serve
 
 ### SELinux
 
-Although a good defense, SELinux is a pain. If you have write errors on your files (most probably on /bootstrap/cache/\* and /storage/logs/\* for Laravel), begin by temporarily deactivate SELinux with `setenforce 0`. If the website runs normally, that was the problem. In that case, get security back with `setenforce 1`. Then use `semanage` to change the context authorizations (always check the paths):
+Although a good defense, SELinux is a pain. If you have write errors on your files (most probably on /bootstrap/cache/\* and /storage/logs/\* for Laravel), after the installation of the application, begin by temporarily deactivate SELinux with `setenforce 0`. If the website runs normally, that was the problem. In that case, get security back with `setenforce 1`. Then use `semanage` to change the context authorizations (always check the paths):
 
 ```bash
 sudo semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/production/html/storage(/.*)?" && \
