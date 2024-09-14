@@ -128,7 +128,7 @@ echo "************************************************************"
 echo "Updating the system..."
 echo "************************************************************"
 
-sudo dnf update -y
+sudo dnf update -y && sudo dnf upgrade -y
 
 echo "Done."
 
