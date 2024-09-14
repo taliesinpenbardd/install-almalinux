@@ -305,12 +305,12 @@ echo "************************************************************"
 sudo dnf install mariadb-server -y
 sudo systemctl enable mariadb
 sudo systemctl start mariadb
-# sudo mysql_secure_installation
+sudo mysql_secure_installation
 
 
-echo "************************************************************"
-echo "Now you're on your own..."
-echo "Run mysql_secure_installation to secure your MariaDB installation."
-echo "************************************************************"
+# echo "************************************************************"
+# echo "Now you're on your own..."
+# echo "Run mysql_secure_installation to secure your MariaDB installation."
+# echo "************************************************************"
 
-echo "Done."
+# echo "Done."
