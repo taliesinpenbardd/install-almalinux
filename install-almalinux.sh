@@ -8,7 +8,7 @@ set -e -u
 username="almalinux"
 
 # Set keyboard to MacOS and French
-localectl set-keymap fr-mac
+sudo localectl set-keymap fr-mac
 
 #############################################
 # Functions
