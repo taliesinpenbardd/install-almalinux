@@ -23,10 +23,10 @@ This script will:
   - epel-release
   - git
   - curl
-  - (micro editor)[https://micro-editor.github.io/]
+  - [micro editor](https://micro-editor.github.io/)
   - docker
   - NodeJS 20
-  - (caddy server)[https://caddyserver.com/]
+  - [caddy server](https://caddyserver.com/)
   - fail2ban
   - PHP-FPM with PHP 8.3
   - Composer
