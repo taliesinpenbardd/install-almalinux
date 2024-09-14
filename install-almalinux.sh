@@ -179,6 +179,15 @@ sudo dnf install docker -y
 
 echo "Done."
 
+# Install git
+echo "************************************************************"
+echo "Installing git..."
+echo "************************************************************"
+
+sudo dnf install git -y
+
+echo "Done."
+
 # Install NodeJS
 echo "************************************************************"
 echo "Installing NodeJS 20"
@@ -227,7 +236,8 @@ sudo systemctl enable caddy
 sudo mkdir -p /var/www/production/html
 sudo mkdir -p /var/www/production/logs
 sudo touch /var/www/production/logs/access.caddy.log
-sudo cp localhost.caddyfile /etc/caddy/Caddyfile.d
+# sudo cp localhost.caddyfile /etc/caddy/Caddyfile.d
+sudo curl -o /etc/caddy/Caddyfile.d/localhost.caddyfile https://raw.githubusercontent.com/taliesinpenbardd/install-almalinux/main/localhost.caddyfile
 sudo systemctl start caddy
 sudo systemctl start php-fpm
 
