@@ -309,7 +309,9 @@ sudo systemctl start mariadb
 
 echo "************************************************************"
 echo "Installation complete."
+echo "Don't forget to run 'sudo mysql_secure_installation' later to secure your MariaDB installation."
 echo "************************************************************"
-echo "Do you want to run mysql_secure_installation now? (y/n)"
-read -r response
-if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then sudo mysql_secure_installation; else echo "Please remember to run 'sudo mysql_secure_installation' later to secure your MariaDB installation."; fi
+
+# echo "Do you want to run mysql_secure_installation now? (y/n)"
+# read -r response
+# if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then sudo mysql_secure_installation; else echo "Please remember to run 'sudo mysql_secure_installation' later to secure your MariaDB installation."; fi
